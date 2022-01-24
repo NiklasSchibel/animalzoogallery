@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
+import axios from "axios";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+    const [Animals10, setAnimals10] = useState([]);
+    const [Animals1, setAnimals1] = useState([]);
+    const fetch10Characters = () => {
+        axios.get("https://zoo-animal-api.herokuapp.com/animals/rand/10").then(res => {
+            console.log(res.data);
+            setAnimals10(res.data);
+        }).catch(err => {
+            console.log(err.message)
+        });
+    }
+
+    useEffect(() => {
+        fetch10Characters();
+    }, [])
+
+
+    return (
+        <div className="App">
+            <header className="App-header">
+                Zoo-API
+            </header>
+            <div className="WrapperRow">
+                {Animals10.map()}
+                <div className="Item">
+
+                </div>
+            </div>
+        </div>
+    );
 }
 
-export default App;
